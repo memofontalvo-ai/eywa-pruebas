@@ -1977,7 +1977,7 @@ var posMesaActual=null, posCatActual=null;
 var posCarts={};                 // { "M5": { uid:{name,price,qty,obs} } }
 var posPedidos=[];               // cache en vivo de pedidos no pagados
 var posUnsub=null;               // función para cancelar el listener
-var posCobroMesa=null, posPayMethod=null;
+var posCobroMesa=null, posPayMethod=null, posEnviando=false;
 
 /* —— util pantallas —— */
 function posHideAll(){
@@ -2219,6 +2219,7 @@ function resDel(uid){
 }
 function cerrarResumen(){document.getElementById("posResumen").classList.remove("on");if(posCatActual)renderPosItems();}
 function enviarACocina(){
+  if(posEnviando)return;                 // evita doble envío por doble toque
   var mesa=posMesaActual;
   var cart=posCarts[mesa]||{};
   var items=[],tot=0;
@@ -2228,13 +2229,15 @@ function enviarACocina(){
   var pedido={mesa:mesa,items:items,total:tot,obs:document.getElementById("resObs").value.trim(),
     estado:"pendiente",mesero:"",ts:now,hora:new Date(now).toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"})};
   if(!db){showToast("Sin conexión: no se pudo enviar");return;}
+  posEnviando=true;
   db.collection("pos_pedidos").add(pedido).then(function(){
     showToast("\u2713 Enviado a cocina \u2014 "+mesa.replace("M","Mesa "));
     posCarts[mesa]={};
     document.getElementById("resObs").value="";
     cerrarResumen();
     posVolverMesas();
-  }).catch(function(e){showToast("Error: "+e.message);});
+    posEnviando=false;
+  }).catch(function(e){showToast("Error: "+e.message);posEnviando=false;});
 }
 
 /* ════════ COCINA ════════ */
