@@ -374,7 +374,40 @@ body::after{content:"";position:fixed;bottom:0;left:0;right:0;height:45vh;backgr
 .estado-badge.pendiente{background:rgba(200,168,75,.18);color:#e8c97a;}
 .estado-badge.preparando{background:rgba(240,164,74,.18);color:#f0a44a;}
 .estado-badge.listo{background:rgba(95,207,128,.18);color:#5fcf80;}
-.res-edit{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.07);}
+.cobro-prop{margin:12px 0;padding:12px;background:rgba(200,168,75,.06);border:1px solid rgba(200,168,75,.25);border-radius:12px;}
+.cobro-prop-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.cobro-prop-lbl{font-family:'Josefin Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;color:#fff;}
+.cobro-prop-btns{display:flex;gap:6px;}
+.cobro-prop-btns button{padding:6px 10px;border-radius:20px;border:1px solid rgba(200,168,75,.4);background:rgba(200,168,75,.08);color:#e8c97a;font-family:'Josefin Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:.5px;cursor:pointer;}
+.cobro-prop-btns button:active{background:rgba(200,168,75,.25);}
+.cobro-prop-input{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(200,168,75,.3);border-radius:10px;padding:8px 12px;}
+.cobro-prop-input span{color:#e8c97a;font-family:'Josefin Sans',sans-serif;font-size:16px;font-weight:700;}
+.cobro-prop-input input{flex:1;min-width:0;background:none;border:none;outline:none;color:#fff;font-family:'Josefin Sans',sans-serif;font-size:16px;font-weight:700;}
+.cobro-prop-hint{font-family:'Josefin Sans',sans-serif;font-size:10px;color:rgba(255,255,255,.45);margin-top:6px;}
+/* Prefactura impresa */
+#printArea{display:none;}
+.pf-wrap{width:280px;margin:0 auto;padding:14px;color:#000;font-family:'Courier New',monospace;font-size:12px;line-height:1.5;}
+.pf-center{text-align:center;}
+.pf-bold{font-weight:700;}
+.pf-title{font-size:15px;font-weight:700;letter-spacing:1px;}
+.pf-line{border-top:1px dashed #000;margin:8px 0;}
+.pf-row{display:flex;justify-content:space-between;gap:8px;}
+.pf-big{font-size:15px;font-weight:700;}
+@media print{
+  body{background:#fff !important;}
+  body > *{display:none !important;}
+  #printArea{display:block !important;position:absolute;left:0;top:0;width:100%;background:#fff;color:#000;}
+}
+.pos-hist{background:rgba(200,168,75,.06);border:1px solid rgba(200,168,75,.28);border-radius:14px;padding:14px 16px;margin-bottom:6px;}
+.pos-hist-title{font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#e8c97a;margin-bottom:10px;}
+.pos-hist-row{display:flex;justify-content:space-between;gap:10px;font-family:'Josefin Sans',sans-serif;font-size:13px;color:rgba(255,255,255,.85);padding:5px 0;}
+.pos-hist-row .r{color:#e8c97a;white-space:nowrap;}
+.pos-hist-row .o{font-size:11px;color:#f0a44a;}
+.pos-hist-total{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid rgba(200,168,75,.22);font-family:'Josefin Sans',sans-serif;}
+.pos-hist-total .l{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.7);}
+.pos-hist-total .v{font-size:17px;font-weight:700;color:#e8c97a;}
+.pos-hist-note{font-family:'Josefin Sans',sans-serif;font-size:11px;color:rgba(255,255,255,.5);margin-top:8px;text-align:center;}
+
 .res-edit:last-child{border-bottom:none;}
 .res-edit-top{display:flex;align-items:flex-start;gap:10px;}
 .res-edit-name{flex:1;font-family:'Josefin Sans',sans-serif;font-size:14px;font-weight:600;color:#fff;}
@@ -451,6 +484,7 @@ body::after{content:"";position:fixed;bottom:0;left:0;right:0;height:45vh;backgr
 <div id="posPedido" class="pos-screen">
   <div class="pos-top"><button class="pos-back" onclick="posBackPedido()">&#8592;</button><div><div class="pos-top-title" id="pedidoTitle">Mesa</div><div class="pos-top-sub" id="pedidoSub">Elige una categoría</div></div></div>
   <div class="pos-wrap">
+    <div id="posHist" style="padding:14px 16px 0;"></div>
     <div id="posCatGrid" class="cat-grid" style="padding:18px 16px;"></div>
     <div id="posItemsWrap" style="display:none;padding:14px 16px 0;">
       <button id="posCatBack" class="pos-btn ghost" style="margin-bottom:12px;" onclick="volverPosCats()">&#8592; Categorías</button>
@@ -491,11 +525,23 @@ body::after{content:"";position:fixed;bottom:0;left:0;right:0;height:45vh;backgr
   <div class="pos-sheet-title" id="cobroTitle">Cuenta</div>
   <div class="pos-sheet-sub" id="cobroSub">Detalle de la mesa</div>
   <div id="cobroItems"></div>
+  <div class="pos-total-row" style="margin-top:14px;padding-top:14px;"><span class="l">Subtotal</span><span class="v" id="cobroSubtotal" style="font-size:16px;">$0</span></div>
+  <div class="cobro-prop">
+    <div class="cobro-prop-head"><span class="cobro-prop-lbl">Propina</span>
+      <div class="cobro-prop-btns"><button onclick="setPropinaPct(10)">10%</button><button onclick="setPropinaPct(5)">5%</button><button onclick="setPropinaPct(0)">Sin propina</button></div>
+    </div>
+    <div class="cobro-prop-input"><span>$</span><input id="propinaInput" type="text" inputmode="numeric" oninput="onPropinaInput(this.value)" placeholder="0"/></div>
+    <div class="cobro-prop-hint" id="propinaHint">Propina sugerida 10%</div>
+  </div>
   <div class="pos-total-row"><span class="l">Total a pagar</span><span class="v" id="cobroTotal">$0</span></div>
+  <button class="pos-btn ghost full" onclick="imprimirPrefactura()">&#128424; Imprimir prefactura</button>
   <div class="pos-pay"><button id="payCashPos" onclick="posSelPay('efectivo')">&#128181; Efectivo</button><button id="payTrPos" onclick="posSelPay('transferencia')">&#128179; Transferencia</button></div>
   <button class="pos-btn green full" onclick="cerrarCuenta()">&#10004; Cerrar cuenta</button>
   <button class="pos-btn ghost full" onclick="cerrarCobro()">Cancelar</button>
 </div></div>
+
+<!-- Área de impresión de prefactura (oculta en pantalla, visible al imprimir) -->
+<div id="printArea"></div>
 
 
 <div id="editModal"><div class="edit-box"><div class="edit-title" id="editTitle">Editar Plato</div><div class="edit-row"><label class="edit-lbl">Nombre del plato *</label><input class="edit-input" id="eName" type="text"/></div><div class="edit-row"><label class="edit-lbl">Precio * (ej: $25.000)</label><input class="edit-input" id="ePrice" type="text"/></div><div class="edit-row"><label class="edit-lbl">Descripcion</label><textarea class="edit-input" id="eDesc" rows="2" style="resize:none;"></textarea></div><div class="edit-row"><label class="edit-lbl">Precio 2 (opcional)</label><input class="edit-input" id="ePrice2" type="text" placeholder="Ej: $90.000 botella"/></div><div class="edit-row"><label class="edit-lbl">Foto del plato <span style="font-size:9px;color:#c8a84b;letter-spacing:1px;">JPG/PNG &bull; 300×300px recomendado &bull; m&#225;x 300KB</span></label><div style="display:flex;align-items:center;gap:10px;margin-top:6px;"><img id="eImgPreview" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid rgba(200,168,75,.3);display:none;"/><label style="flex:1;padding:10px;background:rgba(200,168,75,.08);border:1px dashed rgba(200,168,75,.4);border-radius:10px;color:rgba(200,168,75,.8);font-family:'Josefin Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:center;cursor:pointer;">&#128247; Subir foto<input type="file" accept="image/*" class="file-hidden" onchange="previewEditImg(this)"/></label></div></div><div class="edit-check"><input type="checkbox" id="eActivo" checked/><label for="eActivo">Visible en la carta</label></div><div class="edit-check"><input type="checkbox" id="eDom"/><label for="eDom">Disponible para domicilio</label></div><div class="edit-btns"><button class="btn-save" onclick="saveEdit()">GUARDAR</button><button class="btn-cancel-edit" onclick="closeEdit()">Cancelar</button></div></div></div>
@@ -1977,7 +2023,7 @@ var posMesaActual=null, posCatActual=null;
 var posCarts={};                 // { "M5": { uid:{name,price,qty,obs} } }
 var posPedidos=[];               // cache en vivo de pedidos no pagados
 var posUnsub=null;               // función para cancelar el listener
-var posCobroMesa=null, posPayMethod=null, posEnviando=false;
+var posCobroMesa=null, posPayMethod=null, posEnviando=false, posCobroSub=0, posPropina=0, posCobroLines=[];
 
 /* —— util pantallas —— */
 function posHideAll(){
@@ -2041,7 +2087,10 @@ function posIniciarListener(){
       posPedidos.sort(function(a,b){return (a.ts||0)-(b.ts||0);});
       if(posRol==="cocina")renderCocina();
       else if(posRol==="caja")renderCaja();
-      else if(posRol==="mesero" && document.getElementById("posMesero").classList.contains("on"))renderMesas();
+      else if(posRol==="mesero"){
+        if(document.getElementById("posMesero").classList.contains("on"))renderMesas();
+        else if(document.getElementById("posPedido").classList.contains("on") && document.getElementById("posHist").style.display!=="none")renderPosHist(posMesaActual);
+      }
     },function(err){showToast("Error de conexión: "+err.code);});
 }
 function posDetener(){if(posUnsub){posUnsub();posUnsub=null;}posRol=null;}
@@ -2103,13 +2152,43 @@ function renderPosCatGrid(){
 function volverPosCats(){
   document.getElementById("posItemsWrap").style.display="none";
   document.getElementById("posCatGrid").style.display="grid";
+  document.getElementById("posHist").style.display="block";
+  renderPosHist(posMesaActual);
   document.getElementById("pedidoSub").textContent="Elige una categoría";
   posCatActual=null;
+}
+/* Histórico: lo que la mesa ya pidió y está en cocina/listo (no pagado) */
+function renderPosHist(mesa){
+  var box=document.getElementById("posHist");if(!box)return;
+  var peds=posPedidos.filter(function(p){return p.mesa===mesa;});
+  if(!peds.length){box.innerHTML="";box.style.display="none";return;}
+  // Agrupar por plato (nombre+precio) sumando cantidades
+  var grp={},orden=[],tot=0;
+  for(var i=0;i<peds.length;i++){
+    for(var j=0;j<peds[i].items.length;j++){
+      var it=peds[i].items[j];var key=it.name+"|"+it.price;
+      if(!grp[key]){grp[key]={name:it.name,price:it.price,qty:0,obs:[]};orden.push(key);}
+      grp[key].qty+=it.qty;
+      if(it.obs)grp[key].obs.push(it.obs);
+      tot+=it.price*it.qty;
+    }
+  }
+  var rows="";
+  for(var o=0;o<orden.length;o++){
+    var g=grp[orden[o]];var sub=g.price*g.qty;
+    var ob=g.obs.length?" <span class='o'>("+g.obs.join(", ")+")</span>":"";
+    rows+="<div class='pos-hist-row'><span>"+g.qty+"\u00D7 "+g.name+ob+"</span><span class='r'>$"+sub.toLocaleString("es-CO")+"</span></div>";
+  }
+  box.innerHTML="<div class='pos-hist'><div class='pos-hist-title'>\uD83E\uDDFE Ya pedido en esta mesa</div>"+rows+
+    "<div class='pos-hist-total'><span class='l'>Total mesa</span><span class='v'>$"+tot.toLocaleString("es-CO")+"</span></div>"+
+    "<div class='pos-hist-note'>Agrega abajo los platos nuevos para esta mesa</div></div>";
+  box.style.display="block";
 }
 /* Platos de una categoría, con descripción + cantidades */
 function abrirPosCat(key){
   posCatActual=key;
   document.getElementById("posCatGrid").style.display="none";
+  document.getElementById("posHist").style.display="none";
   document.getElementById("posItemsWrap").style.display="block";
   document.getElementById("posCatBack").innerHTML="\u2190 "+MENU[key].n;
   document.getElementById("pedidoSub").textContent=MENU[key].n;
@@ -2299,20 +2378,76 @@ function renderCaja(){
 function abrirCobro(mesa){
   posCobroMesa=mesa;posPayMethod=null;
   var peds=posPedidos.filter(function(p){return p.mesa===mesa;});
-  var rows="",tot=0;
+  // Agrupar por plato para la cuenta y la prefactura
+  var grp={},orden=[],sub=0;
   for(var i=0;i<peds.length;i++){
     for(var j=0;j<peds[i].items.length;j++){
-      var it=peds[i].items[j];var sub=it.price*it.qty;tot+=sub;
-      rows+="<div class='res-row'><span>"+it.qty+"\u00D7 "+it.name+"</span><span class='r'>$"+sub.toLocaleString("es-CO")+"</span></div>";
+      var it=peds[i].items[j];var key=it.name+"|"+it.price;
+      if(!grp[key]){grp[key]={name:it.name,price:it.price,qty:0};orden.push(key);}
+      grp[key].qty+=it.qty;sub+=it.price*it.qty;
     }
   }
+  posCobroLines=[];var rows="";
+  for(var o=0;o<orden.length;o++){
+    var g=grp[orden[o]];var ls=g.price*g.qty;
+    posCobroLines.push({name:g.name,qty:g.qty,sub:ls});
+    rows+="<div class='res-row'><span>"+g.qty+"\u00D7 "+g.name+"</span><span class='r'>$"+ls.toLocaleString("es-CO")+"</span></div>";
+  }
+  posCobroSub=sub;
+  posPropina=Math.round(sub*0.10);   // propina sugerida 10%
   document.getElementById("cobroTitle").textContent=mesa.replace("M","MESA ");
   document.getElementById("cobroSub").textContent=peds.length+(peds.length===1?" pedido":" pedidos")+" en la mesa";
   document.getElementById("cobroItems").innerHTML=rows;
-  document.getElementById("cobroTotal").textContent="$"+tot.toLocaleString("es-CO");
+  document.getElementById("propinaInput").value=posPropina;
+  document.getElementById("propinaHint").textContent="Propina sugerida 10% ($"+Math.round(sub*0.10).toLocaleString("es-CO")+")";
+  actualizarCobroTotales();
   document.getElementById("payCashPos").className="";
   document.getElementById("payTrPos").className="";
   document.getElementById("posCobro").classList.add("on");
+}
+function actualizarCobroTotales(){
+  document.getElementById("cobroSubtotal").textContent="$"+posCobroSub.toLocaleString("es-CO");
+  document.getElementById("cobroTotal").textContent="$"+(posCobroSub+posPropina).toLocaleString("es-CO");
+}
+function setPropinaPct(pct){
+  posPropina=Math.round(posCobroSub*pct/100);
+  document.getElementById("propinaInput").value=posPropina;
+  document.getElementById("propinaHint").textContent=pct===0?"Sin propina":"Propina "+pct+"%";
+  actualizarCobroTotales();
+}
+function onPropinaInput(val){
+  posPropina=parseInt((val||"").replace(/[^0-9]/g,""))||0;
+  document.getElementById("propinaHint").textContent="Propina personalizada";
+  actualizarCobroTotales();
+}
+function imprimirPrefactura(){
+  var now=new Date();
+  var fecha=now.toLocaleDateString("es-CO")+" "+now.toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"});
+  var lines="";
+  for(var i=0;i<posCobroLines.length;i++){
+    var l=posCobroLines[i];
+    lines+="<div class='pf-row'><span>"+l.qty+"x "+l.name+"</span><span>$"+l.sub.toLocaleString("es-CO")+"</span></div>";
+  }
+  var total=posCobroSub+posPropina;
+  var html="<div class='pf-wrap'>"+
+    "<div class='pf-center pf-title'>EYWA RESTAURANTE</div>"+
+    "<div class='pf-center'>Carrera 40 # 39 Esquina<br>Barranquilla &bull; Tel 318 085 9445</div>"+
+    "<div class='pf-line'></div>"+
+    "<div class='pf-center pf-bold'>PREFACTURA</div>"+
+    "<div class='pf-row'><span>"+posCobroMesa.replace("M","Mesa ")+"</span><span>"+fecha+"</span></div>"+
+    "<div class='pf-line'></div>"+
+    lines+
+    "<div class='pf-line'></div>"+
+    "<div class='pf-row'><span>Subtotal</span><span>$"+posCobroSub.toLocaleString("es-CO")+"</span></div>"+
+    "<div class='pf-row'><span>Propina"+(posCobroSub>0?" ("+Math.round(posPropina/posCobroSub*100)+"%)":"")+"</span><span>$"+posPropina.toLocaleString("es-CO")+"</span></div>"+
+    "<div class='pf-line'></div>"+
+    "<div class='pf-row pf-big'><span>TOTAL</span><span>$"+total.toLocaleString("es-CO")+"</span></div>"+
+    "<div class='pf-line'></div>"+
+    "<div class='pf-center'>Esta es una prefactura, no es<br>factura electrónica.</div>"+
+    "<div class='pf-center pf-bold' style='margin-top:8px;'>¡Gracias por su visita!</div>"+
+    "</div>";
+  document.getElementById("printArea").innerHTML=html;
+  window.print();
 }
 function cerrarCobro(){document.getElementById("posCobro").classList.remove("on");}
 function posSelPay(metodo){
@@ -2326,9 +2461,10 @@ function cerrarCuenta(){
   var mesa=posCobroMesa;
   var peds=posPedidos.filter(function(p){return p.mesa===mesa;});
   if(!peds.length){cerrarCobro();return;}
+  var propina=posPropina, total=posCobroSub+posPropina, ts=Date.now();
   var batch=db.batch();
   for(var i=0;i<peds.length;i++){
-    batch.update(db.collection("pos_pedidos").doc(peds[i]._id),{estado:"pagado",metodoPago:posPayMethod,pagadoTs:Date.now()});
+    batch.update(db.collection("pos_pedidos").doc(peds[i]._id),{estado:"pagado",metodoPago:posPayMethod,propina:propina,totalConPropina:total,pagadoTs:ts});
   }
   batch.commit().then(function(){
     showToast("\u2713 Cuenta cerrada \u2014 "+mesa.replace("M","Mesa "));
