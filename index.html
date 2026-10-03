@@ -566,7 +566,7 @@ footer{background:rgba(5,3,2,.86)!important;border-top:1px solid rgba(244,210,31
 /* ============================================================================ */
 
 
-/* === AJUSTE FINAL LA GRANJA v5 === */
+/* === AJUSTE FINAL LA GRANJA v6 === */
 .nav-logo{height:62px!important;max-width:112px!important;object-fit:contain!important;object-position:center!important;filter:drop-shadow(0 5px 12px rgba(0,0,0,.80))!important;}
 .hero-cnt{max-width:430px!important;padding-top:8px!important;}
 .hero-logo{width:min(62vw,285px)!important;max-width:285px!important;height:auto!important;object-fit:contain!important;margin:12px auto 22px!important;filter:drop-shadow(0 10px 20px rgba(0,0,0,.78))!important;}
@@ -618,7 +618,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;background:lin
 <div id="adminLogin"><div class="login-box"><div class="login-title">Panel Admin</div><div class="login-sub">La Granja Restaurante</div><div style="position:relative;width:100%;"><input class="login-input" id="admPwd" onkeydown="if(event.key==='Enter')checkPwd()" placeholder="Clave" style="width:100%;padding-right:44px;box-sizing:border-box;" type="password"/><button onclick="var i=document.getElementById('admPwd');i.type=i.type==='password'?'text':'password'" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(200,168,75,.7);font-size:18px;cursor:pointer;padding:0;">👁</button></div><div class="login-err" id="admErr"></div><button class="btn-login" onclick="checkPwd()">ENTRAR</button><br/><button class="btn-login-cancel" onclick="showChangePwd()">Cambiar contraseña</button><br/><button class="btn-login-cancel" onclick="closeLogin()">Cancelar</button></div></div>
 <div id="adminPanel"><div class="adm-nav"><div class="adm-title">⚙ Admin La Granja</div><button class="btn-exit" onclick="exitAdmin()">Salir</button></div><div id="admHome"><div class="adm-home-sub">Que deseas editar?</div><button class="adm-opt" onclick="showAdmSub('carrusel')"><span class="adm-opt-icon">🌊</span><div><div class="adm-opt-title">Carrusel de Promos</div><div class="adm-opt-sub">Agregar, cambiar o eliminar imagenes</div></div></button><button class="adm-opt" onclick="showAdmSub('menu')"><span class="adm-opt-icon">🍽</span><div><div class="adm-opt-title">Editar Menu</div><div class="adm-opt-sub">Agregar, editar o eliminar platos</div></div></button><button class="adm-opt" onclick="showAdmSub('eventos')"><span class="adm-opt-icon">🏆</span><div><div class="adm-opt-title">Portada de Eventos</div><div class="adm-opt-sub">Imagen de bienvenida a pantalla completa</div></div></button><button class="adm-opt" onclick="iniciarPedidoCajero()"><span class="adm-opt-icon">📞</span><div><div class="adm-opt-title">Tomar Pedido por Telefono</div><div class="adm-opt-sub">Arma el pedido del cliente y enviaselo por WhatsApp</div></div></button><button class="adm-opt" onclick="showAdmSub('promosdom')"><span class="adm-opt-icon">🍲</span><div><div class="adm-opt-title">Menú de Promociones</div><div class="adm-opt-sub">Bowls, Lunch, Hamburguesas con imagen y platos</div></div></button><button class="adm-opt" onclick="abrirPOS()" style="border-color:rgba(200,168,75,.55);background:rgba(200,168,75,.1);"><span class="adm-opt-icon">🍽</span><div><div class="adm-opt-title" style="color:#e8c97a;">Sistema POS — Mesas</div><div class="adm-opt-sub">Mesero toma el pedido • Cocina prepara • Caja cobra</div></div></button><button class="adm-opt" onclick="window.open('https://memofontalvo-ai.github.io/restaurante-la-granja/','_blank')" style="border-color:rgba(100,200,100,.45);background:rgba(60,140,60,.12);"><span class="adm-opt-icon">💰</span><div><div class="adm-opt-title" style="color:#7be07b;">Control de Caja</div><div class="adm-opt-sub">Cuadre de turno, reportes y estado de resultados</div></div></button></div>
 <div class="adm-sub" id="admCarrusel"><div class="adm-sub-nav"><button class="btn-back" onclick="showAdmSub(null)">← Volver</button><span class="adm-sub-title">Carrusel</span></div><div id="promoList"></div><div style="padding:12px 16px;display:flex;flex-direction:column;gap:8px;align-items:center;"><p style="font-size:9px;color:rgba(200,168,75,.95);letter-spacing:1.5px;font-family:'Josefin Sans',sans-serif;text-transform:uppercase;text-align:center;margin:0;">JPG / PNG • 800×400px recomendado • máx 500KB</p><label class="btn-add-promo" style="width:100%;text-align:center;">+ Agregar imagen<input accept="image/*" class="file-hidden" onchange="addPromo(this)" type="file"/></label></div></div>
-<div class="adm-sub" id="admMenu"><div class="adm-sub-nav"><button class="btn-back" onclick="showAdmSub(null)">← Volver</button><span class="adm-sub-title">Editar Menu</span></div><div style="padding:0 4px 14px;"><button onclick="resetAllDom()" style="width:100%;background:rgba(255,80,60,.12);border:1px solid rgba(255,80,60,.45);color:#ff7a66;font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:12px;border-radius:10px;cursor:pointer;">🛵 Desactivar todos los domicilios</button></div><div id="admMenuList"></div></div>
+<div class="adm-sub" id="admMenu"><div class="adm-sub-nav"><button class="btn-back" onclick="showAdmSub(null)">← Volver</button><span class="adm-sub-title">Editar Menu</span></div><div style="padding:0 4px 14px;display:flex;flex-direction:column;gap:8px;"><button onclick="resetAllDom()" style="width:100%;background:rgba(255,80,60,.12);border:1px solid rgba(255,80,60,.45);color:#ff7a66;font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:12px;border-radius:10px;cursor:pointer;">🛵 Desactivar todos los domicilios</button><button onclick="comprimirTodasLasFotos()" style="width:100%;background:rgba(200,168,75,.12);border:1px solid rgba(200,168,75,.45);color:#c8a84b;font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:12px;border-radius:10px;cursor:pointer;">🗜️ Comprimir fotos del menú</button></div><div id="admMenuList"></div></div>
 <div class="adm-sub" id="admEventos"><div class="adm-sub-nav"><button class="btn-back" onclick="showAdmSub(null)">← Volver</button><span class="adm-sub-title">Portada Eventos</span></div><div style="padding:0 4px 12px;"><p style="font-size:10px;color:rgba(255,255,255,.7);font-family:'Josefin Sans',sans-serif;line-height:1.5;margin-bottom:12px;">Estas imagenes aparecen a pantalla completa al abrir la pagina. Si subes varias, rotan automaticamente. Si no hay ninguna, la pagina abre directo al inicio.</p><label class="btn-add-dish" style="display:block;text-align:center;cursor:pointer;">📷 Subir imagen de evento<input accept="image/*" class="file-hidden" onchange="addEvent(this)" type="file"/></label></div><div id="eventList"></div></div>
 <div class="adm-sub" id="admPromosDom"><div class="adm-sub-nav"><button class="btn-back" onclick="showAdmSub(null)">← Volver</button><span class="adm-sub-title">Menú de Promociones</span></div><div style="padding:0 4px 12px;"><p style="font-size:10px;color:rgba(255,255,255,.7);font-family:'Josefin Sans',sans-serif;line-height:1.5;margin-bottom:12px;">Estas promociones aparecen con su imagen arriba del menu. Con los botones de abajo eliges si cada promo se muestra en la Carta del restaurante, en Domicilio, o en ambas. Al tocar la imagen, se ven los platos de esa promo.</p><label class="btn-add-dish" style="display:block;text-align:center;cursor:pointer;">🎉 Crear nueva promocion<input accept="image/*" class="file-hidden" onchange="addPromoDom(this)" type="file"/></label><button onclick="cargarProteinasAuto()" style="width:100%;margin-top:8px;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.4);color:#25d366;font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:11px;border-radius:9px;cursor:pointer;">⚡ Cargar proteinas Bowls y Lunch automaticamente</button></div><div id="promoDomList"></div></div>
 </div>
@@ -1469,8 +1469,6 @@ function syncFromFirebase(){
   if(!db) return;
   db.collection("menu").get().then(function(snap){
     if(snap.empty){
-      // Base vacía: NO sobrescribir nada automáticamente (protege las fotos guardadas).
-      // El menú de fábrica solo se muestra en pantalla; se sembrará solo con acción manual del admin.
       console.warn("Base de datos de menú vacía. Mostrando menú de fábrica sin guardar.");
       return;
     }
@@ -1481,8 +1479,22 @@ function syncFromFirebase(){
       else if(data.secs&&data.secs.length>0) MENU[k].secs=data.secs;
       if(data.nota) MENU[k].nota=data.nota;
     });
-    // Repintar las vistas con la configuración real de Firebase
-    refreshAfterSync();
+    // Cargar fotos por separado desde menu_fotos
+    db.collection("menu_fotos").get().then(function(fsnap){
+      fsnap.forEach(function(fdoc){
+        var k=fdoc.id; var fdata=fdoc.data();
+        if(!MENU[k]) return;
+        var items=getItems(MENU[k]);
+        Object.keys(fdata).forEach(function(fk){
+          var idx=parseInt(fk.replace("f",""));
+          if(!isNaN(idx) && items[idx]) items[idx].i=fdata[fk];
+        });
+      });
+      refreshAfterSync();
+    }).catch(function(){
+      // Si no hay colección de fotos, igual refrescar con lo que hay
+      refreshAfterSync();
+    });
   }).catch(function(){});
 }
 function refreshAfterSync(){
@@ -1522,17 +1534,48 @@ function resetAllDom(){
   buildMenuAdmin();
   showToast("Todos los domicilios fueron desactivados");
 }
-function saveMenuCat(k){
-  if(!db){showToast("Sin conexión a la base de datos");return;}
+function saveMenuCat(k, onSuccess, onError){
+  if(!db){showToast("Sin conexión a la base de datos");if(onError)onError("sin_db");return;}
   var d=MENU[k]; var pay={nota:d.nota||""};
-  if(d.items) pay.items=d.items;
-  else if(d.secs) pay.secs=d.secs;
+  // Clonar items SIN fotos de los otros platos para no superar el límite de 1MB
+  function clonarSinFotos(arr){ return arr.map(function(it){ var c={}; for(var p in it) if(p!=="i") c[p]=it[p]; return c; }); }
+  if(d.items) pay.items=clonarSinFotos(d.items);
+  else if(d.secs) pay.secs=d.secs.map(function(s){ return {n:s.n, items:clonarSinFotos(s.items||[])}; });
+  // Guardar primero los datos sin fotos (rápido y liviano)
   db.collection("menu").doc(k).set(pay).then(function(){
-    console.log("Guardado en Firebase: "+k);
+    console.log("Datos guardados (sin fotos): "+k);
+    // Luego guardar las fotos por separado, una a una
+    var items=getItems(MENU[k]);
+    var fotosRef=db.collection("menu_fotos").doc(k);
+    var fotos={};
+    items.forEach(function(it,i){ if(it.i) fotos["f"+i]=it.i; });
+    if(Object.keys(fotos).length>0){
+      fotosRef.set(fotos).then(function(){
+        console.log("Fotos guardadas: "+k);
+        if(onSuccess)onSuccess();
+      }).catch(function(err){
+        console.error("Error fotos "+k+":",err);
+        if(onSuccess)onSuccess(); // datos sí guardaron, solo las fotos fallaron
+      });
+    } else {
+      if(onSuccess)onSuccess();
+    }
   }).catch(function(err){
     console.error("Error al guardar "+k+":",err);
-    showToast("Error al guardar. La categoría puede ser muy pesada (fotos grandes).");
+    var msg="Error al guardar";
+    if(err && err.code==="permission-denied") msg="Error: sin permiso para guardar.";
+    else if(err && err.message) msg="Error: "+err.message;
+    showToast(msg);
+    if(onError)onError(err);
   });
+}
+function saveItemFoto(catKey, idx, b64, cb){
+  // Guarda solo la foto de UN plato específico
+  if(!db){if(cb)cb();return;}
+  var upd={}; upd["f"+idx]=b64;
+  db.collection("menu_fotos").doc(catKey).set(upd,{merge:true}).then(function(){
+    if(cb)cb();
+  }).catch(function(){ if(cb)cb(); });
 }
 syncFromFirebase();
 
@@ -2223,10 +2266,92 @@ function saveEdit(){
   } else {
     arr[_eIdx]=ni;
   }
-  saveMenuCat(_eCat);
+  var _msgOk=_eIdx===-1?"Plato agregado ✓":"Plato actualizado ✓";
+  var _savedIdx=_eIdx;
   closeEdit();
   buildMenuAdmin();
-  showToast(_eIdx===-1?"Plato agregado":"Plato actualizado");
+  // Si la foto es muy grande, comprimirla automáticamente antes de guardar
+  var MAX_IMG=220*1024;
+  function doSave(){
+    saveMenuCat(_eCat, function(){ showToast(_msgOk); }, function(){ buildMenuAdmin(); });
+  }
+  if(ni.i && ni.i.length>MAX_IMG){
+    showToast("Comprimiendo foto...");
+    comprimirB64(ni.i,300,300,MAX_IMG,function(nueva){
+      ni.i=nueva;
+      var idx2=_savedIdx!==-1?_savedIdx:arr.length-1;
+      if(arr[idx2]) arr[idx2].i=nueva;
+      doSave();
+    });
+  } else {
+    doSave();
+  }
+}
+
+/* ── COMPRIMIR FOTOS BASE64 YA GUARDADAS ── */
+function comprimirB64(b64, maxW, maxH, maxBytes, cb){
+  var img=new Image();
+  img.onload=function(){
+    var w=img.width,h=img.height;
+    var ratio=Math.min(maxW/w,maxH/h,1);
+    var nw=Math.round(w*ratio),nh=Math.round(h*ratio);
+    var c=document.createElement("canvas");
+    c.width=nw; c.height=nh;
+    c.getContext("2d").drawImage(img,0,0,nw,nh);
+    var q=0.80;
+    var out=c.toDataURL("image/jpeg",q);
+    while(out.length>maxBytes && q>0.35){ q-=0.07; out=c.toDataURL("image/jpeg",q); }
+    if(out.length>maxBytes){
+      c.width=Math.round(nw*0.75); c.height=Math.round(nh*0.75);
+      c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+      out=c.toDataURL("image/jpeg",0.60);
+    }
+    cb(out);
+  };
+  img.onerror=function(){ cb(b64); }; // si falla, devolver original
+  img.src=b64;
+}
+function comprimirTodasLasFotos(){
+  if(!confirm("¿Comprimir todas las fotos del menú? Esto puede tomar unos segundos.")) return;
+  var MAX_IMG=220*1024; // 220KB máximo por foto
+  var MAX_DIM=300;
+  var keys=Object.keys(MENU);
+  var total=0,comprimidas=0,tareas=[];
+  keys.forEach(function(k){
+    var items=getItems(MENU[k]);
+    items.forEach(function(it){
+      if(it.i && it.i.length>MAX_IMG){
+        total++;
+        tareas.push({k:k,it:it});
+      }
+    });
+  });
+  if(total===0){ showToast("✓ Todas las fotos ya son livianas"); return; }
+  showToast("Comprimiendo "+total+" foto(s)...");
+  var pendientes=total;
+  var catsAfectadas={};
+  tareas.forEach(function(t){
+    comprimirB64(t.it.i, MAX_DIM, MAX_DIM, MAX_IMG, function(nueva){
+      t.it.i=nueva;
+      catsAfectadas[t.k]=true;
+      comprimidas++;
+      pendientes--;
+      if(pendientes===0){
+        // Guardar todas las categorías afectadas
+        var cats=Object.keys(catsAfectadas);
+        var guardadas=0;
+        cats.forEach(function(k){
+          saveMenuCat(k, function(){
+            guardadas++;
+            if(guardadas===cats.length){
+              showToast("✓ "+comprimidas+" foto(s) comprimidas y guardadas");
+              buildMenuAdmin();
+            }
+          });
+        });
+      }
+    });
+  });
 }
 
 /* ── TOAST ── */
