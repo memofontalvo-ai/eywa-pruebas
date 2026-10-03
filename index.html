@@ -1542,27 +1542,29 @@ function saveMenuCat(k, onSuccess, onError, optsExtra){
   if(d.items) pay.items=clonarSinFotos(d.items);
   else if(d.secs) pay.secs=d.secs.map(function(s){ return {n:s.n, items:clonarSinFotos(s.items||[])}; });
   // Guardar datos de texto (nunca incluye fotos)
+  showToast("Guardando...");
   db.collection("menu").doc(k).set(pay).then(function(){
-    console.log("Datos guardados (sin fotos): "+k);
-    // Solo guardar foto si se indicó una nueva explícitamente
+    console.log("✅ Datos guardados en Firebase: "+k);
     if(optsExtra && typeof optsExtra.itemIdx==="number" && optsExtra.newFoto){
       var upd={}; upd["f"+optsExtra.itemIdx]=optsExtra.newFoto;
       db.collection("menu_fotos").doc(k).set(upd,{merge:true}).then(function(){
-        console.log("Foto guardada: "+k+" idx="+optsExtra.itemIdx);
+        console.log("✅ Foto guardada: "+k+" idx="+optsExtra.itemIdx);
         if(onSuccess)onSuccess();
       }).catch(function(err){
-        console.error("Error foto "+k+":",err);
+        console.error("❌ Error foto "+k+":",err);
+        showToast("⚠️ Foto no guardó: "+(err&&err.message?err.message:"error desconocido"));
         if(onSuccess)onSuccess();
       });
     } else {
-      // Sin foto nueva → termina aquí
       if(onSuccess)onSuccess();
     }
   }).catch(function(err){
-    console.error("Error al guardar "+k+":",err);
-    var msg="Error al guardar";
-    if(err && err.code==="permission-denied") msg="Error: sin permiso para guardar.";
-    else if(err && err.message) msg="Error: "+err.message;
+    console.error("❌ Error al guardar "+k+":",err);
+    var msg="❌ Error: ";
+    if(err && err.code==="permission-denied") msg+="sin permiso en Firebase";
+    else if(err && err.code) msg+=err.code;
+    else if(err && err.message) msg+=err.message;
+    else msg+="error desconocido";
     showToast(msg);
     if(onError)onError(err);
   });
